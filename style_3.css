@@ -28,3 +28,7 @@
     width: 150px;
     background-color: aliceblue;
 }
+
+br{
+    display: none;
+}
