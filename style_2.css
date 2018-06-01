@@ -1,0 +1,20 @@
+#allthing{
+    height: 700px;
+}
+#headtitle{
+    float: left;
+    margin:0 0 0 6px;
+    padding: 0;
+    border:0;
+    width: 200px;
+    height: 100%;
+    color: white;
+    background-color: aqua;
+    text-align: center;
+}
+
+#main{
+    margin:0 0 0 6px;
+    float: right;
+    width: 70%;
+}
