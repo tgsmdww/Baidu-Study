@@ -1,0 +1,147 @@
+html,body{
+    margin:0 auto;
+}
+
+.header{
+    width:100%;
+    height: 50px;
+    background-color: slategrey;
+    position: relative;
+}
+
+.logo{
+    position: absolute;
+    font-size: 120%;
+    left:120px;
+    top:12.5px;
+    color: white;
+}
+
+.nav-head{
+    position: absolute;
+    font-size: 30%;
+    right:20px;
+}
+
+.nav-head a:link, .nav-head a:visited{
+    color:white;
+}
+
+.banner{
+    width:100%;
+    height:200px;
+    background-color: greenyellow;
+    position: relative;
+}
+
+.page{
+    box-sizing: border-box;
+    width:20px;
+    height: 30px;
+    border: 
+    1px solid black;
+    background-color: aqua;
+    text-align: center;
+    line-height: 30px;
+}
+
+#page1{
+    position: absolute;
+    bottom: 5px;
+    right:200px;
+}
+
+#page2{
+    position: absolute;
+    bottom: 5px;
+    right:175px;
+}
+
+#page3{
+    position: absolute;
+    bottom: 5px;
+    right:150px;
+}
+
+#page4{
+    position: absolute;
+    bottom: 5px;
+    right:125px;
+}
+
+.act{
+    height:45px;
+    background-color: aliceblue;
+}
+
+.main{
+    width: 100%;
+    height: 70px;
+    border-bottom: 1px solid grey;
+}
+
+.nav-main{
+    margin: 0 auto;
+    width:70%;
+    height: 100%;
+    padding-left: 0;
+    margin-top: 0;
+}
+
+.nav-main li{
+    float: left;
+    list-style-type: none;
+    font-size: 80%;
+    width: 80px;
+}
+
+.nav-main li a{
+    font-size:70%;
+    display: inline-block;
+    text-decoration: none;
+    width:100%;
+    height: 40px;
+    line-height: 3;
+    background-color: gray;
+    color:black;
+    text-align: center;
+    margin-top: 30px;
+    border:1px solid #ccc;
+    border-bottom: none;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.nav-main li a.active{
+    background-color: white;
+}
+
+.main-container{
+    margin:0 auto;
+    width:70%;
+}
+
+.row{
+    display: flex;
+}
+
+.cell{
+    flex:auto;
+    box-sizing: border-box;
+    margin:5px;
+    height:150px;
+    line-height: 150px;
+    text-align: center;
+    border:1px solid #ccc;
+}
+
+.footer{
+    margin: 0 auto;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 110px;
+    background-color: bisque;
+}
