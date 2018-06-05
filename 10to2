@@ -28,10 +28,9 @@ function dec2bin(decNumber) {
     document.getElementById("trans-btn").onclick = function(){
         var res = dec2bin(document.getElementById("dec-number").value);
         var require = document.getElementById("bin-bit").value;
-        if(require >= res.length)
+        if(Number(require) >= res.length)
         {
-            rest = require - res.length;
-            res = (Array(rest).join(0) + Number(res)).slice(-rest);
+            res = (Array(Number(require)).join('0') + Number(res)).slice(-require);
             document.getElementById("result").innerHTML = "运算结果：" + res;
         }
         else{
