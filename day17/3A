@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">    
+    <title>IFE ECMAScript</title>
+</head>
+<body>        
+    <!-- <input id="dec-number" type="number" placeholder="输入一个十进制非负整数"> -->
+    <button id="trans-btn">点击输出3A序列</button>
+    <p id="result">结果</p>
+
+
+
+
+    <script>
+        var a3 = new Array;
+        a3[0] = 0;
+        for(var i = 1; i <= 100; i++)
+        {
+            if((i % 3) == 0 || (i % 10) % 3 == 0)
+            a3[i] = "PA";
+            else
+            a3[i] = i;
+        }
+        document.getElementById("trans-btn").onclick = function(){
+        document.getElementById("result").innerHTML = "结果：" + a3;
+        }
+    </script>
+</body>
+</html>
