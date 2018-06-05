@@ -16,7 +16,7 @@ function dec2bin(decNumber) {
     // 这里是上一个任务的实现
     var num = Number(decNumber);
     if(decNumber<0) console.log("Wrong number!");
-    console.log(num.toString(2));
+    //console.log(num.toString(2));
     return num.toString(2);
 }
 
