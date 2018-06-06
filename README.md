@@ -8,3 +8,5 @@ JS数字前补零
 
 querySelector
 https://blog.csdn.net/z742182637/article/details/51655690
+
+keypress是“当用户按下键盘上的字符键时出发”，而keydown为任意键。
