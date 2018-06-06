@@ -1,0 +1,6 @@
+task1
+keypress是“当用户按下键盘上的字符键时出发”，而keydown为任意键。
+
+task2
+不能用setAttribute('display','none')而能使用style.display = 'none'
+https://blog.csdn.net/liuch1997/article/details/72528405
