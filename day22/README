@@ -13,3 +13,30 @@ else
 
 task2
 目前没有找到很好的获取行数的方法。。
+看了一个老哥的方法
+    function getTextareaLines(node){
+              // 获取行数
+        // 看到一位老哥的想法， 真的是妙啊， 插入隐藏元素 进行计算。
+        var style = getComputedStyle(node);
+        var str_child = document.getElementById('child_str');
+        var lines;
+        if (str_child != null){
+          // 判断子节点是否已经存在， 如果是 则不插入
+          lineHeight = parseFloat(style.lineHeight == 'normal' ? 1.2 * parseFloat(style.fontSize) : style.lineHeight);
+          str_child.value = node.value;
+          lines = Math.round(str_child.scrollHeight / lineHeight );
+          console.log(lines)
+        }
+        else  {
+          //插入节点
+          var str_child = document.createElement('textarea');
+          str_child.style.visibility = 'hidden';
+          str_child.style.height = 0;
+          str_child.id = 'child_str';
+          document.getElementById('input').appendChild(str_child);
+          getTextareaLines(node);
+        }
+        if (lines == undefined) lines=0;
+        return lines;
+    }
+    只是这个lineHeight = parseFloat(style.lineHeight == 'normal' ? 1.2 * parseFloat(style.fontSize) : style.lineHeight);看不明白
