@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <title>22_3</title>
+</head>
+<body>
+
+  <p id="result"></p>
+  <script>
+    function removeRepetition(str) {
+    var result = "";
+
+    // do something
+    result = str.split('');
+    var i;
+    for(i = 1;i<result.length;i++)
+    {
+        if(result[i] == result[i-1])
+        {
+            result.splice(i,1);
+            i--;
+        }
+    }
+
+    result = result.join('');
+    return result.toString();
+}
+
+// 测试用例
+console.log(removeRepetition("aaa")); // ->a
+console.log(removeRepetition("abbba")); // ->aba
+console.log(removeRepetition("aabbaabb")); // ->abab
+console.log(removeRepetition("")); // ->
+console.log(removeRepetition("abc")); // ->abc
+
+  </script>  
+</body>
+</html>
