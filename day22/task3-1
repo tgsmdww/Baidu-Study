@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <title>22_3</title>
+</head>
+<body>
+
+  <p id="result"></p>
+  <script>
+    function diyTrim(str) {
+    var result = "";
+    var first;
+    var last;
+
+    // do something
+    for(var i = 0; i < str.length; i++)
+    {
+        if(str[i] != ' ' && str[i]!= '　'){
+        first = i;
+        break;
+        }
+    }
+        for(var i = str.length-1; i>=0; i--)
+    {
+        if(str[i] != ' '){
+        last = i;
+        break;
+        }
+    }
+    result = str.slice(first,last+1);
+
+
+    return result
+}
+
+// 测试用例
+console.log(diyTrim(' a f b    ')); // ->a f b
+console.log(diyTrim('    ffdaf    ')); // ->ffdaf
+console.log(diyTrim('1    ')); // ->1
+console.log(diyTrim('　　f')); // ->f
+console.log(diyTrim('  　  a f b 　　 ')); // ->a f b
+console.log(diyTrim(' ')); // ->
+console.log(diyTrim('　')); // ->
+console.log(diyTrim('')); // ->
+
+  </script>  
+</body>
+</html>
