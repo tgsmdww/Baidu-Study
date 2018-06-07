@@ -1,3 +1,4 @@
+task1
 判断是否有空格
 var text = "sess sges";
 var reg = /\s/;
@@ -5,3 +6,6 @@ if(reg.exec(text)==null)
   alert('没有空格');
 else
   alert('有空格');
+
+偷懒没判断是否是数字  可以把判断那部分放进function里
+（为什么不用正则判断是否是数字？大概是懒得搜了。。。
