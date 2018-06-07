@@ -40,3 +40,7 @@ task2
         return lines;
     }
     只是这个lineHeight = parseFloat(style.lineHeight == 'normal' ? 1.2 * parseFloat(style.fontSize) : style.lineHeight);看不明白
+    
+    
+    task3-2
+    参考了别人转成数组来解决，太妙了
