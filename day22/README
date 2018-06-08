@@ -44,3 +44,12 @@ task2
     
     task3-2
     参考了别人转成数组来解决，太妙了
+    例：
+    var myData = 'Manchester,London,Liverpool,Birmingham,Leeds,Carlisle';
+    var myArray = myData.split(',')
+    console.log(myData)   Manchester,London,Liverpool,Birmingham,Leeds,Carlisle
+    console.log(myArray)  ["Manchester", "London", "Liverpool", "Birmingham", "Leeds", "Carlisle"]
+
+同样也可以转化回去
+var myNewString = myArray.join(',');
+console.log(myNewString)   Manchester,London,Liverpool,Birmingham,Leeds,Carlisle
