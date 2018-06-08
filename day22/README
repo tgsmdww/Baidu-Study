@@ -53,3 +53,6 @@ task2
 同样也可以转化回去
 var myNewString = myArray.join(',');
 console.log(myNewString)   Manchester,London,Liverpool,Birmingham,Leeds,Carlisle
+
+task5
+可以用shift unshift
