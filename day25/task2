@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+	<title>task2</title>
+</head>
+<body>
+    <div>
+            <select id="year-select">
+
+                </select>
+                
+                <select id="month-select">
+
+                </select>
+                
+                <select id="day-select">
+
+                </select>
+                
+                <select id="hour-select">
+
+                </select>
+                
+                <select id="minite-select">
+
+                </select>
+                
+                <select id="second-select">
+
+                </select>
+                
+                <p id="result-wrapper">现在距离 2001年1月1日星期X HH:MM:SS 还有 X 天 X 小时 X 分 X 秒</p>
+    </div>
+
+    <script type="text/javascript">
+        var year = document.getElementById('year-select');
+        var month = document.getElementById('month-select');
+        var day = document.getElementById('day-select');
+        var hour = document.getElementById('hour-select');
+        var minite = document.getElementById('minite-select');
+        var second = document.getElementById('second-select');
+        var body = document.getElementsByTagName('body')[0];
+        var p = document.getElementById('result-wrapper');
+        var div = document.getElementsByTagName('div')[0];
+
+        for(var i = 1970; i <2033; i++)
+        {
+            year.add(new Option(i));
+        }
+        
+        for(var i = 1; i <13; i++)
+        {
+            month.add(new Option(i));
+        }
+        
+        for(var i = 1; i <= 31; i++)
+        {
+            day.add(new Option(i));
+        }
+
+        for(var i = 0;i<24;i++)
+        {
+            hour.add(new Option(i));
+        }
+
+        for(var i = 0;i<60;i++)
+        {
+            minite.add(new Option(i));
+        }
+
+        for(var i = 0;i<60;i++)
+        {
+            second.add(new Option(i));
+        }
+
+
+
+        function compare(){
+            var datenow = new Date();
+            var weeknow = datenow.getDay();
+            var yearnow = datenow.getFullYear();
+            var monthnow = datenow.getMonth();
+            var daynow = datenow.getDate();
+            var weeknow = datenow.getDay();
+            var hournow = datenow.getHours();
+            var minutenow = datenow.getMinutes();
+            var millnow = datenow.getSeconds();
+            
+        
+            var selecttime = new Date(year.value, (month.value-1), day.value, hour.value,minite.value,second.value);
+            if(datenow.getTime() - selecttime <= 0){
+                var datedelete = new Date(selecttime - datenow.getTime());
+            p.innerHTML = "现在距离 "+year.value+'年'+month.value+'月'+day.value+'日星期'+weekday(weeknow)+' '+ hour.value+':'+minite.value+':'+second.value+'还有'+eaday(datedelete)+'天'+checkTime(eahour(datedelete))+'小时'+checkTime(eamin(datedelete))+'分'+checkTime(easec(datedelete))+'秒';
+            }
+            else
+            {
+
+                var datedelete2 = new Date(datenow.getTime() - selecttime);
+                
+                p.innerHTML = "现在距离 "+year.value+'年'+month.value+'月'+day.value+'日星期'+weekday(weeknow)+' '+ hour.value+':'+minite.value+':'+second.value+'已经过去'+eaday(datedelete2) +'天'+checkTime(eahour(datedelete2))+'小时'+checkTime(eamin(datedelete2))+'分'+checkTime(easec(datedelete2))+'秒';
+            }
+
+            setTimeout('compare()',500);
+        }
+
+
+
+            body.addEventListener('onload',compare());
+            year.addEventListener('onchange',updateDay());
+            month.addEventListener('onchange',updateDay());
+
+        function updateDay(){  //根据选择的年月更新select
+        console.log("升级啦")
+            deleteop(day);
+
+            if(judgeyear(year.value))
+            for(var i = 1; i<=judgedays(1,parseInt(month.value));i++)
+            {
+                day.add(new Option(i));
+            }
+            else
+            {
+                for(var i = 1; i<=judgedays(0,parseInt(month.value));i++)
+            {
+                day.add(new Option(i));
+            }
+            }
+        }
+
+        function eaday(time){
+            return Math.floor(time/(24*3600*1000));
+        }
+
+        function eahour(time)
+        {
+            var leave1 = time%(24*3600*1000);
+            return Math.floor(leave1/(3600*1000));
+        }
+
+        function eamin(time)
+        {
+            var leave1 = time%(24*3600*1000);
+            var leave2 = leave1%(3600*1000);
+            return Math.floor(leave2/(60*1000));
+        }
+
+        function easec(time){
+            var leave1 = time%(24*3600*1000);
+            var leave2 = leave1%(3600*1000);
+            var leave3 = leave2%(60*1000);
+            return Math.round(leave3/1000);
+        }
+
+
+        
+        function weekday(day){
+            switch(day){
+                case 1 :return '一';break;
+                case 2:return '二';break;
+                case 3:return '三';break;
+                case 4:return '四';break;
+                case 5:return '五';break;
+                case 6:return '六';break;
+                case 7:return '日';break;
+            }            
+        }
+        
+        function judgeyear(year)
+        {
+            if((year % 4 == 0)&&(year % 100 != 0) || (year % 400 == 0))
+            return 1;
+            else return 0;
+        }
+
+        function judgedays(a,month)
+        {
+            if(a == 1)
+            {
+                switch(month)
+                {
+                    case 1: return 31;break;
+                    case 2: return 29;break;
+                    case 3: return 31;break;
+                    case 4: return 30;break;
+                    case 5: return 31;break;
+                    case 6: return 30;break;
+                    case 7: return 31;break;
+                    case 8: return 31;break;
+                    case 9: return 30;break;
+                    case 10: return 31;break;
+                    case 11: return 30;break;
+                    case 12: return 31;break;
+                }
+            }
+            else{
+                switch(month)
+                {
+                    case 1: return 31;break;
+                    case 2: return 28;break;
+                    case 3: return 31;break;
+                    case 4: return 30;break;
+                    case 5: return 31;break;
+                    case 6: return 30;break;
+                    case 7: return 31;break;
+                    case 8: return 31;break;
+                    case 9: return 30;break;
+                    case 10: return 31;break;
+                    case 11: return 30;break;
+                    case 12: return 31;break;
+                }
+            }
+        }
+
+
+        function checkTime(i){
+            if(i<10)
+            {
+                i = '0'+i;
+            }
+            return i;
+        }
+
+        function deleteop(node)
+        {
+            node.options.length = 0;
+        }
+
+	</script>
+</body>
+</html>
