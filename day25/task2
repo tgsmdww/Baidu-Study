@@ -2,15 +2,16 @@
 <html lang="en">
 <head>
         <meta charset="UTF-8">
-	<title>task2</title>
+    <title>task2</title>
+    
 </head>
 <body>
     <div>
-            <select id="year-select">
+            <select id="year-select" >
 
                 </select>
                 
-                <select id="month-select">
+                <select id="month-select" >
 
                 </select>
                 
@@ -31,9 +32,10 @@
                 </select>
                 
                 <p id="result-wrapper">现在距离 2001年1月1日星期X HH:MM:SS 还有 X 天 X 小时 X 分 X 秒</p>
-    </div>
 
+    </div>
     <script type="text/javascript">
+
         var year = document.getElementById('year-select');
         var month = document.getElementById('month-select');
         var day = document.getElementById('day-select');
@@ -43,7 +45,16 @@
         var body = document.getElementsByTagName('body')[0];
         var p = document.getElementById('result-wrapper');
         var div = document.getElementsByTagName('div')[0];
+        addop();
+       
+           // body.onload = compare;
+           // document.addEventListener('DOMContentLoaded',compare);
+            window.addEventListener('load',compare);
+            year.addEventListener('change',updateDay);
+            month.addEventListener('change',updateDay)
 
+//增加option
+ function addop(){ 
         for(var i = 1970; i <2033; i++)
         {
             year.add(new Option(i));
@@ -73,9 +84,10 @@
         {
             second.add(new Option(i));
         }
+        }
 
 
-
+//比较日期
         function compare(){
             var datenow = new Date();
             var weeknow = datenow.getDay();
@@ -91,27 +103,22 @@
             var selecttime = new Date(year.value, (month.value-1), day.value, hour.value,minite.value,second.value);
             if(datenow.getTime() - selecttime <= 0){
                 var datedelete = new Date(selecttime - datenow.getTime());
-            p.innerHTML = "现在距离 "+year.value+'年'+month.value+'月'+day.value+'日星期'+weekday(weeknow)+' '+ hour.value+':'+minite.value+':'+second.value+'还有'+eaday(datedelete)+'天'+checkTime(eahour(datedelete))+'小时'+checkTime(eamin(datedelete))+'分'+checkTime(easec(datedelete))+'秒';
+            p.innerHTML = "现在距离 "+year.value+'年'+month.value+'月'+day.value+'日星期'+weekday(selecttime.getDay())+' '+ checkTime(hour.value)+':'+checkTime(minite.value)+':'+checkTime(second.value)+'还有'+eaday(datedelete)+'天'+checkTime(eahour(datedelete))+'小时'+checkTime(eamin(datedelete))+'分'+checkTime(easec(datedelete))+'秒';
             }
             else
             {
 
                 var datedelete2 = new Date(datenow.getTime() - selecttime);
                 
-                p.innerHTML = "现在距离 "+year.value+'年'+month.value+'月'+day.value+'日星期'+weekday(weeknow)+' '+ hour.value+':'+minite.value+':'+second.value+'已经过去'+eaday(datedelete2) +'天'+checkTime(eahour(datedelete2))+'小时'+checkTime(eamin(datedelete2))+'分'+checkTime(easec(datedelete2))+'秒';
+                p.innerHTML = "现在距离 "+year.value+'年'+month.value+'月'+day.value+'日星期'+weekday(selecttime.getDay())+' '+ checkTime(hour.value)+':'+checkTime(minite.value)+':'+checkTime(second.value)+'已经过去'+eaday(datedelete2) +'天'+checkTime(eahour(datedelete2))+'小时'+checkTime(eamin(datedelete2))+'分'+checkTime(easec(datedelete2))+'秒';
             }
 
             setTimeout('compare()',500);
         }
 
 
-
-            body.addEventListener('onload',compare());
-            year.addEventListener('onchange',updateDay());
-            month.addEventListener('onchange',updateDay());
-
-        function updateDay(){  //根据选择的年月更新select
-        console.log("升级啦")
+//根据选择的年月更新select
+        function updateDay(){  
             deleteop(day);
 
             if(judgeyear(year.value))
@@ -128,6 +135,7 @@
             }
         }
 
+//计算剩余时间
         function eaday(time){
             return Math.floor(time/(24*3600*1000));
         }
@@ -152,8 +160,7 @@
             return Math.round(leave3/1000);
         }
 
-
-        
+        //数字转中文
         function weekday(day){
             switch(day){
                 case 1 :return '一';break;
@@ -162,10 +169,12 @@
                 case 4:return '四';break;
                 case 5:return '五';break;
                 case 6:return '六';break;
-                case 7:return '日';break;
+                case 0:return '日';break;
             }            
         }
         
+
+        //判断是否是闰年
         function judgeyear(year)
         {
             if((year % 4 == 0)&&(year % 100 != 0) || (year % 400 == 0))
@@ -173,6 +182,7 @@
             else return 0;
         }
 
+        //判断该月有几天
         function judgedays(a,month)
         {
             if(a == 1)
@@ -212,7 +222,7 @@
             }
         }
 
-
+        //位数不够2位补零
         function checkTime(i){
             if(i<10)
             {
@@ -220,7 +230,8 @@
             }
             return i;
         }
-
+    
+    //删除选项
         function deleteop(node)
         {
             node.options.length = 0;
