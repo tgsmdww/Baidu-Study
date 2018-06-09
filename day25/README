@@ -1,0 +1,9 @@
+task1 
+event.addEventListener(event,functionname)
+function不加()!
+    
+    var body = document.getElementsByTagName('body')[0];
+    body.addEventListener('onload',compare)或者load都不能触发事件 document.body  document无效 window有效
+    body.onload = compare能触发事件
+    document.addEventListener('DOMContentLoaded',compare)能触发事件
+    通过chrome无痕窗口排除了插件的影响
