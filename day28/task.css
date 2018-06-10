@@ -1,0 +1,25 @@
+div input, div ul{
+    font-size: 13px;
+    font-family: sans-serif;
+}
+ul {
+ list-style-type: none;
+ width: 154px;
+ margin: 0;
+ padding: 0;
+ border: 1px solid gainsboro
+}
+
+li{
+    margin: 0;
+    overflow: hidden;
+}
+
+
+#selected{
+    background-color: rgb(0, 255, 76);
+}
+
+#unselected{
+    background-color: inherit;
+}
