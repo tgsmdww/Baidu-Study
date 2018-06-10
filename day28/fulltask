@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">    
+        <title>IFE ECMAScript</title>
+        <link rel="stylesheet" type="text/css" href="task.css">
+    </head>
+
+    <body>
+        <div class="wrapper">
+            <input id="email-input" type="text">
+            <ul id="email-sug-wrapper" class="email-sug"></ul>
+        </div>
+
+        <script>
+        var textinput = document.getElementById('email-input');
+        var ul = document.getElementById('email-sug-wrapper');
+        var list = document.getElementsByTagName('li');
+
+        var textin = null;
+        var postfixList = ['163.com', 'gmail.com', '126.com', 'qq.com', '263.net'];
+        
+        var nowSelectTipIndex = 0;
+            
+    //         inputDom的输入监听
+    // 获取用户输入，生成提示框中的提示内容，将提示内容添加到email-sug-wrapper中
+    // 控制email-sug-wrapper的显示/隐藏状态
+    window.onload = function(){//一进入页面就将焦点放在输入框中
+        textinput.focus();
+    }
+textinput.oninput = function(){                   //keypress会漏掉最后一个输入，keyup实现不了粘贴
+    var str = getinput();
+    var e = event || window.event;
+    if(e.keyCode != 13 && e.keyCode != 38 && e.keyCode != 40){
+    resetindex();
+    deleteli();
+    creattip();
+    controlvision();
+    }
+}
+
+ul.onclick = function(){
+    console.log('beenclicked')
+    var e = event || window.event;
+    var target = e.target;
+    if(target.nodeName.toLowerCase() == 'li')
+    {
+        textinput.value = HtmlUtil.htmlDecode(target.innerHTML);
+        hidezip();
+    }
+    textinput.focus();//用户点击鼠标，进行提示选择后，焦点依然在输入框中
+
+}
+
+textinput.addEventListener('keydown',function(){
+    var str = getinput();
+    var e = event || window.event;
+    
+    if(e.keyCode == 13 || e.keyCode == 38 || e.keyCode == 40){
+        event.preventDefault(); //阻止默认事件
+    if(list != undefined && list.length != 1){
+        if(e.keyCode == 38)
+        {
+            if(nowSelectTipIndex != 0)
+            {
+                list[nowSelectTipIndex].id = 'unselected'
+                nowSelectTipIndex -= 1;
+                list[nowSelectTipIndex].id = 'selected';
+            }
+            else{
+                list[nowSelectTipIndex].id = 'unselected'
+                nowSelectTipIndex = postfixList.length-1;
+                list[nowSelectTipIndex].id = 'selected';
+            }
+        }
+        else if(e.keyCode == 40)
+        {
+            if(nowSelectTipIndex != postfixList.length -1)
+            {
+                list[nowSelectTipIndex].id = 'unselected'
+                nowSelectTipIndex += 1;
+                list[nowSelectTipIndex].id = 'selected';
+            }
+            else{
+                list[nowSelectTipIndex].id = 'unselected'
+                nowSelectTipIndex = 0;
+                list[nowSelectTipIndex].id = 'selected';
+            }
+        }
+        }
+
+        if(e.keyCode == 13){
+            textinput.value = HtmlUtil.htmlDecode(list[nowSelectTipIndex].innerHTML);
+            hidezip();
+        }
+        
+}
+else if(e.keyCode == 27) //用户按ESC键的时候，对用户输入进行全选
+{
+    console.log('comein27')
+    textinput.select();
+}
+})
+
+        ul.onmouseover = function(){
+            var e = event || window.event;
+            var target = e.target;
+            if(target.nodeName.toLowerCase() == 'li')
+            {
+                list[nowSelectTipIndex].id = 'unselected';
+                nowSelectTipIndex = getlipos(target);
+                list[nowSelectTipIndex].id = 'selected';
+            }
+        }
+
+        function getlipos(node)
+        {
+            for(var i = 0; i < list.length; i++)
+            {
+                if(node == list[i])
+                return i;
+            }
+        }
+
+// 点击文档document时候 下拉框隐藏掉
+document.onclick = function(){
+    var e = event || window.event;
+    if(e.target.nodeName != 'ul')
+    hidezip();
+}
+
+
+function resetindex(){ //重置索引
+    nowSelectTipIndex = 0;
+}
+
+function getinput(){            //获取用户输入
+    textin = textinput.value;              //拿到input输入框的输入内容trim后返回    
+    return textin.trim();
+
+}
+
+function creattip(){ //生成提示框中的提示内容() {
+    var str = getinput();                    // 获取用户输入
+    if(checkat(str))//有@
+    {   
+        var newstr = checkatafter(str);
+        for(var i = 0; i < postfixList.length; i++)
+        {
+            if(postfixList[i].indexOf(newstr) != -1 || newstr == ''){ //如果数组中有匹配的
+            var eleLi = document.createElement('li');
+            var leftstr = str.slice(0,str.indexOf('@'));
+            eleLi.innerHTML = HtmlUtil.htmlEncode(leftstr)+'@'+postfixList[i];
+            ul.appendChild(eleLi);
+            list[0].id = 'selected';
+            }
+        }
+
+        if(ul.childNodes.length == 0) //不存在数组中的后缀
+        {
+            if(str.indexOf('.') == -1 || str.lastIndexOf('.') < str.indexOf('@'))     //e.g. 123@222
+            {
+            var eleLi = document.createElement('li');
+            eleLi.innerHTML = HtmlUtil.htmlEncode(str)+'.com';
+            ul.appendChild(eleLi);
+            list[0].id = 'selected';
+            }
+            else if(str.lastIndexOf('.')> str.indexOf('@') && str.indexOf('.com') < str.indexOf('@') )  //e.g 123@222.c
+            {
+                var eleLi = document.createElement('li');
+                eleLi.innerHTML = HtmlUtil.htmlEncode(str.slice(0,str.lastIndexOf('.')))+'.com'
+                ul.appendChild(eleLi);
+                list[0].id = 'selected';
+            }
+            else if(str.indexOf('.com') > str.indexOf('@')){
+                for(var i = 0; i < postfixList.length; i++) {
+                var eleLi = document.createElement('li');
+                eleLi.innerHTML = HtmlUtil.htmlEncode(str.slice(0,str.indexOf('@')))+'@'+postfixList[i];
+                ul.appendChild(eleLi);
+        }
+            list[0].id = 'selected';
+            }
+        }
+        
+    }
+    
+    else{
+       
+        for(var i = 0; i < postfixList.length; i++) {
+        var eleLi = document.createElement('li');
+        eleLi.innerHTML = HtmlUtil.htmlEncode(str)+'@'+postfixList[i];
+        ul.appendChild(eleLi);
+        }
+        list[0].id = 'selected';
+
+    }
+    }                                                
+        
+
+function deleteli() //删除已存在的li
+{
+    var len = ul.childNodes.length; //ul.childNodes.length会变！不能直接用在for里
+    for(var i = 0; i < len ; i++){
+    ul.removeChild(ul.childNodes[0]);  //注意index不能是i不然会删实际的第1 3 ……个
+
+    }
+}
+
+
+function controlvision(){   //控制email-sug-wrapper的显示/隐藏状态() {
+    if(textinput.value.trim() == '')                  //用户输入为空
+        {
+            hidezip();
+        }                    //隐藏提示框
+    else displayzip();
+                            //显示提示框
+    
+}
+
+function hidezip() {
+    ul.hidden = true;
+}
+
+function displayzip() {
+    ul.hidden = false;
+}
+
+function checkat(str){   //判断输入有没有@
+    if(str.indexOf('@') != -1)
+    return 1;
+    else return 0;
+}
+
+function checkatafter(str) //匹配@之后的内容
+{
+    var index = str.indexOf('@');
+    var strleft = str.slice(index+1);
+    return strleft;
+}
+
+var HtmlUtil = {
+        /*1.用浏览器内部转换器实现html转码*/
+        htmlEncode:function (html){
+            //1.首先动态创建一个容器标签元素，如DIV
+            var temp = document.createElement ("div");
+            //2.然后将要转换的字符串设置为这个元素的innerText(ie支持)或者textContent(火狐，google支持)
+            (temp.textContent != undefined ) ? (temp.textContent = html) : (temp.innerText = html);
+            //3.最后返回这个元素的innerHTML，即得到经过HTML编码转换的字符串了
+            var output = temp.innerHTML;
+            temp = null;
+            return output;
+        },
+        /*2.用浏览器内部转换器实现html解码*/
+        htmlDecode:function (text){
+            //1.首先动态创建一个容器标签元素，如DIV
+            var temp = document.createElement("div");
+            //2.然后将要转换的字符串设置为这个元素的innerHTML(ie，火狐，google都支持)
+            temp.innerHTML = text;
+            //3.最后返回这个元素的innerText(ie支持)或者textContent(火狐，google支持)，即得到经过HTML解码的字符串了。
+            var output = temp.innerText || temp.textContent;
+            temp = null;
+            return output;
+        },
+    };
+        </script>
+    </body>
+</html>
