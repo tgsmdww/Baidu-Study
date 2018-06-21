@@ -1,2 +1,2 @@
 优化方案：
-1.要修改数据时再将td改为input+icon+div(two btn)   这样不用给每个input都加上blur()事件
+1.要修改数据时再将td改为input+icon+div(two btn)   这样不用给每个input都加上blur()事件   blur不支持冒泡！
