@@ -2,3 +2,40 @@
 1.要修改数据时再将td改为input+icon+div(two btn)   这样不用给每个input都加上blur()事件   blur不支持冒泡！
 
 click和blur事件冲突：https://blog.csdn.net/ligang2585116/article/details/51764828
+
+尝试了下mousedown事件内设置mouseup事件，应该是可行的
+
+注意内存泄漏
+会
+		<button id = "aaa">aaa</button><!--很神奇,注意addEventListener会查重-->
+
+		<script>
+			var ia = 0;
+			var test = document.getElementById('aaa');
+
+			test.addEventListener('mousedown',function(){
+				console.log('now mousedown');
+				test.removeEventListener('mouseup',mouseupevent);
+				test.addEventListener('mouseup',mouseupevent);
+				function mouseupevent(){ //这里remove也没用，每次都重新定义一个名字一样的函数，之前的仍会在内存中，多了之后造成内存泄漏
+					console.log(ia+'now mouseup');
+					ia++;
+				}
+			});
+		</script>
+    
+    不会
+    		<button id = "aaa">aaa</button>
+		<script>
+			var ia = 0;
+			var test = document.getElementById('aaa');
+
+			test.addEventListener('mousedown',function(){
+				console.log('now mousedown');
+				test.removeEventListener('mouseup',mouseupevent);
+				test.addEventListener('mouseup',mouseupevent);
+			});
+      function mouseupevent(){ //函数定义在外头就可以去重了，也不会内存泄漏
+      	console.log('now mouseup');
+				}
+		</script>
