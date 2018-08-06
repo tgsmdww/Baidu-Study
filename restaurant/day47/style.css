@@ -1,0 +1,14 @@
+#box{
+    display: flex;
+    justify-content: space-between;
+}
+
+#img{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+#cookimg, #serverimg, #customer{
+    position: relative;
+}

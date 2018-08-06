@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Restaurant</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+
+  <body>
+
+    <p id = "cash">Cash: 100000</p>
+
+    <div id = "menu">
+        <ul id = "menulist">菜单：</ul>
+    </div>
+
+    <div id = "img">
+            <img id = "cookimg" src = "./picture/cook.jpg" width="50" height="50">
+            <img id = "serverimg" src= "./picture/server.jpg" width="50" height="50">
+            <img id = "customerimg" src="./picture/customer.jpg" width="50" height="50">
+    </div>
+
+    <div id = "box">
+        <div id = "cook">
+            <div id = "cookstatus">
+                状态：空闲
+            </div>
+                
+            <div id = "dishlist"></div>
+        </div>
+
+        <div id="server">
+            
+        </div>
+
+        <div id="customer">
+            <div id = "customerstatus">
+                状态：缺席
+            </div>
+            <div id = "time"></div>
+            <div id = "waitdishlist"></div>
+        </div>
+    </div>
+
+    <div id = "waitcustomer">
+        排队客户：
+        <ol id = "waitlist"></ol>
+    </div>    
+
+    <script src="./src/jquery-3.3.1.min.js"></script>
+    <script src="./src/basic.js"></script>
+    <script src="./src/class.js"></script>
+    <script src="./src/random.js"></script>
+    <script src="./src/refresh.js"></script>
+    <script src="./src/func.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>
+
