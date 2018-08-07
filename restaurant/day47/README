@@ -1,3 +1,4 @@
+针对问题1：考虑使用观察者模式https://www.cnblogs.com/xianyulaodi/p/5827821.html#_label4
 问题1：
 对异步的编程还不是很熟悉，比如在
          async doWork(){
