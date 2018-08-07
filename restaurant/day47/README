@@ -1,0 +1,38 @@
+问题1：
+对异步的编程还不是很熟悉，比如在
+         async doWork(){
+            const dishes = this.dishes;
+            console.log(dishes);
+            for(const dish of dishes){
+                await this.cookadish(dish);
+                move(1)
+                .then(()=>{
+                    if(judge(dish.name) == 1){
+                    return seatcustomers[0].eat(dish.name).then(lastdish)
+                    }
+                    else{
+                        move(0);
+                        console.log("去端盘");
+                        seatcustomers[0].eat(dish.name);
+                    }
+                })
+            }
+         }
+         
+             async function flow(cus){
+        //有顾客在等待入座
+            await have_a_seat(cus); //入座
+            await move(1);  //服务员到顾客那
+            await seatcustomers[0].orderdish(3);//想想吃啥
+            await choosedishes(seatcustomers[0]);//点单
+            await move(0);//服务员到厨师那
+            await server.tellcook(seatcustomers[0],cook);//服务员告诉厨师菜单
+            await cook.doWork();//做菜
+            await sweep();
+        }
+         
+         我需要并行上菜与做菜，但是上完最后一道菜之后，await cook.doWork()结束，开始之后的操作，如果我没有设置sweep()的话，第一个客人没有
+         吃完下一个客人就会到来，这就很麻烦，有什么办法能既可以并行做菜上菜，又能让最后一道菜吃完之后再让下一个客人进来？
+         
+         一个没有解决的地方：
+         客人上菜之后如果前一道菜没吃完，那么新到的需要等前一道吃完才能吃
