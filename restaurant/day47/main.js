@@ -23,20 +23,24 @@ $(document).ready(function(){
 
 
 
-    async function flow(){
+    async function flow(cus){
         //有顾客在等待入座
-            await have_a_seat(outercustomers);
-            await move(1);
-            await seatcustomers[0].orderdish(3);
-            await choosedishes(seatcustomers[0]);
-            await move(0);
-            await server.tellcook(seatcustomers[0],cook);
-
-        
+            await have_a_seat(cus); //入座
+            await move(1);  //服务员到顾客那
+            await seatcustomers[0].orderdish(3);//想想吃啥
+            await choosedishes(seatcustomers[0]);//点单
+            await move(0);//服务员到厨师那
+            await server.tellcook(seatcustomers[0],cook);//服务员告诉厨师菜单
+            await cook.doWork();
+            await sweep();
+        }
+        console.log(outercustomers) 
+    async function all() {        
+        for(const cus of outercustomers){
+            await flow(cus);
+        }
     }
-
-
-flow()
+    all()
 
 })
 
